@@ -20393,6 +20393,10 @@
 
 	var _reactArt = __webpack_require__(158);
 
+	var _componentsRectangleGroup = __webpack_require__(188);
+
+	var _componentsRectangleGroup2 = _interopRequireDefault(_componentsRectangleGroup);
+
 	var Game = (function (_React$Component) {
 	  _inherits(Game, _React$Component);
 
@@ -20405,10 +20409,11 @@
 	  _createClass(Game, [{
 	    key: "render",
 	    value: function render() {
-	      return _react2["default"].createElement(_reactArt.Surface, {
-	        width: 700,
-	        height: 700,
-	        style: { cursor: "pointer" } });
+	      return _react2["default"].createElement(
+	        _reactArt.Surface,
+	        { width: 700, height: 700, style: { cursor: "pointer" } },
+	        _react2["default"].createElement(_componentsRectangleGroup2["default"], { num: 100 })
+	      );
 	    }
 	  }]);
 
@@ -23760,6 +23765,637 @@
 		}
 
 	});
+
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactArt = __webpack_require__(158);
+
+	var _rectangle = __webpack_require__(189);
+
+	var _rectangle2 = _interopRequireDefault(_rectangle);
+
+	var _ticker = __webpack_require__(192);
+
+	var _ticker2 = _interopRequireDefault(_ticker);
+
+	function generateItems(num) {
+	  var items = new Array(num);
+	  var min = -10;
+	  var max = 10;
+	  for (var i = 0; i < num; i++) {
+	    var size = Math.random() * 20;
+	    items[i] = {
+	      width: size,
+	      height: size,
+	      x: Math.random() * 700,
+	      y: Math.random() * 700,
+	      vx: Math.random() * (max - min + 1) + min,
+	      vy: Math.random() * (max - min + 1) + min
+	    };
+	  }
+	  return items;
+	}
+
+	var RectangleGroup = (function (_React$Component) {
+	  _inherits(RectangleGroup, _React$Component);
+
+	  _createClass(RectangleGroup, null, [{
+	    key: "propTypes",
+	    value: {
+	      num: _react2["default"].PropTypes.number
+	    },
+	    enumerable: true
+	  }]);
+
+	  function RectangleGroup(props) {
+	    _classCallCheck(this, RectangleGroup);
+
+	    _get(Object.getPrototypeOf(RectangleGroup.prototype), "constructor", this).call(this, props);
+	    this.state = {
+	      items: generateItems(this.props.num)
+	    };
+	  }
+
+	  _createClass(RectangleGroup, [{
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      _ticker2["default"].on("tick", this.onTick.bind(this));
+	    }
+	  }, {
+	    key: "onTick",
+	    value: function onTick() {
+	      var newItems = this.state.items.map(function (item) {
+	        item.x = item.x + item.vx;
+	        item.y = item.y + item.vy;
+	        return item;
+	      });
+	      this.setState({ items: newItems });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2["default"].createElement(
+	        _reactArt.Group,
+	        null,
+	        this.state.items.map(function (item) {
+	          return _react2["default"].createElement(_rectangle2["default"], item);
+	        })
+	      );
+	    }
+	  }]);
+
+	  return RectangleGroup;
+	})(_react2["default"].Component);
+
+	exports["default"] = RectangleGroup;
+	module.exports = exports["default"];
+
+/***/ },
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactArtShapesRectangle = __webpack_require__(190);
+
+	var _reactArtShapesRectangle2 = _interopRequireDefault(_reactArtShapesRectangle);
+
+	var Rectangle = (function (_React$Component) {
+	  _inherits(Rectangle, _React$Component);
+
+	  function Rectangle() {
+	    _classCallCheck(this, Rectangle);
+
+	    _get(Object.getPrototypeOf(Rectangle.prototype), "constructor", this).apply(this, arguments);
+	  }
+
+	  _createClass(Rectangle, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2["default"].createElement(_reactArtShapesRectangle2["default"], { width: this.props.width, height: this.props.height, fill: "#000", x: this.props.x, y: this.props.y });
+	    }
+	  }], [{
+	    key: "propTypes",
+	    value: {
+	      width: _react2["default"].PropTypes.number,
+	      height: _react2["default"].PropTypes.number,
+	      x: _react2["default"].PropTypes.number,
+	      y: _react2["default"].PropTypes.number
+	    },
+	    enumerable: true
+	  }]);
+
+	  return Rectangle;
+	})(_react2["default"].Component);
+
+	exports["default"] = Rectangle;
+	module.exports = exports["default"];
+
+/***/ },
+/* 190 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014 Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	module.exports = __webpack_require__(191);
+
+
+/***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014 Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule Rectangle.art
+	 * @typechecks
+	 *
+	 * Example usage:
+	 * <Rectangle
+	 *   width={50}
+	 *   height={50}
+	 *   stroke="green"
+	 *   fill="blue"
+	 * />
+	 *
+	 * Additional optional properties:
+	 *   (Number) radius
+	 *   (Number) radiusTopLeft
+	 *   (Number) radiusTopRight
+	 *   (Number) radiusBottomLeft
+	 *   (Number) radiusBottomRight
+	 *
+	 */
+
+	var React = __webpack_require__(1);
+	var ReactART = __webpack_require__(158);
+
+	var Props = React.PropTypes;
+	var Shape = ReactART.Shape;
+	var Path = ReactART.Path;
+
+	/**
+	 * Rectangle is a React component for drawing rectangles. Like other ReactART
+	 * components, it must be used in a <Surface>.
+	 */
+	var Rectangle = React.createClass({displayName: "Rectangle",
+
+	  propTypes: {
+	    width: Props.number.isRequired,
+	    height: Props.number.isRequired,
+	    radius: Props.number,
+	    radiusTopLeft: Props.number,
+	    radiusTopRight: Props.number,
+	    radiusBottomRight: Props.number,
+	    radiusBottomLeft: Props.number
+	  },
+
+	  render: function() {
+	    var width = this.props.width;
+	    var height = this.props.height;
+	    var radius = this.props.radius ? this.props.radius : 0;
+
+	    // if unspecified, radius(Top|Bottom)(Left|Right) defaults to the radius
+	    // property
+	    var tl = this.props.radiusTopLeft ? this.props.radiusTopLeft : radius;
+	    var tr = this.props.radiusTopRight ? this.props.radiusTopRight : radius;
+	    var br = this.props.radiusBottomRight ?
+	      this.props.radiusBottomRight : radius;
+	    var bl = this.props.radiusBottomLeft ? this.props.radiusBottomLeft : radius;
+
+	    var path = Path();
+
+	    // for negative width/height, offset the rectangle in the negative x/y
+	    // direction. for negative radius, just default to 0.
+	    if (width < 0) {
+	      path.move(width, 0);
+	      width = -width;
+	    }
+	    if (height < 0) {
+	      path.move(0, height);
+	      height = -height;
+	    }
+	    if (tl < 0) { tl = 0; }
+	    if (tr < 0) { tr = 0; }
+	    if (br < 0) { br = 0; }
+	    if (bl < 0) { bl = 0; }
+
+	    // disable border radius if it doesn't fit within the specified
+	    // width/height
+	    if (tl + tr > width) { tl = 0; tr = 0; }
+	    if (bl + br > width) { bl = 0; br = 0; }
+	    if (tl + bl > height) { tl = 0; bl = 0; }
+	    if (tr + br > height) { tr = 0; br = 0; }
+
+	    path.move(0, tl);
+
+	    if (tl > 0) { path.arc(tl, -tl); }
+	    path.line(width - (tr + tl), 0);
+
+	    if (tr > 0) { path.arc(tr, tr); }
+	    path.line(0, height - (tr + br));
+
+	    if (br > 0) { path.arc(-br, br); }
+	    path.line(- width + (br + bl), 0);
+
+	    if (bl > 0) { path.arc(-bl, -bl); }
+	    path.line(0, - height + (bl + tl));
+
+	    return React.createElement(Shape, React.__spread({},  this.props, {d: path}));
+	  }
+
+	});
+
+	module.exports = Rectangle;
+
+
+/***/ },
+/* 192 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _events = __webpack_require__(193);
+
+	var Ticker = new _events.EventEmitter();
+
+	Ticker.frame = 0;
+
+	function tick() {
+	  setTimeout(function () {
+	    requestAnimationFrame(tick);
+	    Ticker.frame++;
+	    Ticker.emit("tick");
+	  }, 1000 / 60);
+	}
+
+	tick();
+
+	exports["default"] = Ticker;
+	module.exports = exports["default"];
+
+/***/ },
+/* 193 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	function EventEmitter() {
+	  this._events = this._events || {};
+	  this._maxListeners = this._maxListeners || undefined;
+	}
+	module.exports = EventEmitter;
+
+	// Backwards-compat with node 0.10.x
+	EventEmitter.EventEmitter = EventEmitter;
+
+	EventEmitter.prototype._events = undefined;
+	EventEmitter.prototype._maxListeners = undefined;
+
+	// By default EventEmitters will print a warning if more than 10 listeners are
+	// added to it. This is a useful default which helps finding memory leaks.
+	EventEmitter.defaultMaxListeners = 10;
+
+	// Obviously not all Emitters should be limited to 10. This function allows
+	// that to be increased. Set to zero for unlimited.
+	EventEmitter.prototype.setMaxListeners = function(n) {
+	  if (!isNumber(n) || n < 0 || isNaN(n))
+	    throw TypeError('n must be a positive number');
+	  this._maxListeners = n;
+	  return this;
+	};
+
+	EventEmitter.prototype.emit = function(type) {
+	  var er, handler, len, args, i, listeners;
+
+	  if (!this._events)
+	    this._events = {};
+
+	  // If there is no 'error' event listener then throw.
+	  if (type === 'error') {
+	    if (!this._events.error ||
+	        (isObject(this._events.error) && !this._events.error.length)) {
+	      er = arguments[1];
+	      if (er instanceof Error) {
+	        throw er; // Unhandled 'error' event
+	      }
+	      throw TypeError('Uncaught, unspecified "error" event.');
+	    }
+	  }
+
+	  handler = this._events[type];
+
+	  if (isUndefined(handler))
+	    return false;
+
+	  if (isFunction(handler)) {
+	    switch (arguments.length) {
+	      // fast cases
+	      case 1:
+	        handler.call(this);
+	        break;
+	      case 2:
+	        handler.call(this, arguments[1]);
+	        break;
+	      case 3:
+	        handler.call(this, arguments[1], arguments[2]);
+	        break;
+	      // slower
+	      default:
+	        len = arguments.length;
+	        args = new Array(len - 1);
+	        for (i = 1; i < len; i++)
+	          args[i - 1] = arguments[i];
+	        handler.apply(this, args);
+	    }
+	  } else if (isObject(handler)) {
+	    len = arguments.length;
+	    args = new Array(len - 1);
+	    for (i = 1; i < len; i++)
+	      args[i - 1] = arguments[i];
+
+	    listeners = handler.slice();
+	    len = listeners.length;
+	    for (i = 0; i < len; i++)
+	      listeners[i].apply(this, args);
+	  }
+
+	  return true;
+	};
+
+	EventEmitter.prototype.addListener = function(type, listener) {
+	  var m;
+
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+
+	  if (!this._events)
+	    this._events = {};
+
+	  // To avoid recursion in the case that type === "newListener"! Before
+	  // adding it to the listeners, first emit "newListener".
+	  if (this._events.newListener)
+	    this.emit('newListener', type,
+	              isFunction(listener.listener) ?
+	              listener.listener : listener);
+
+	  if (!this._events[type])
+	    // Optimize the case of one listener. Don't need the extra array object.
+	    this._events[type] = listener;
+	  else if (isObject(this._events[type]))
+	    // If we've already got an array, just append.
+	    this._events[type].push(listener);
+	  else
+	    // Adding the second element, need to change to array.
+	    this._events[type] = [this._events[type], listener];
+
+	  // Check for listener leak
+	  if (isObject(this._events[type]) && !this._events[type].warned) {
+	    var m;
+	    if (!isUndefined(this._maxListeners)) {
+	      m = this._maxListeners;
+	    } else {
+	      m = EventEmitter.defaultMaxListeners;
+	    }
+
+	    if (m && m > 0 && this._events[type].length > m) {
+	      this._events[type].warned = true;
+	      console.error('(node) warning: possible EventEmitter memory ' +
+	                    'leak detected. %d listeners added. ' +
+	                    'Use emitter.setMaxListeners() to increase limit.',
+	                    this._events[type].length);
+	      if (typeof console.trace === 'function') {
+	        // not supported in IE 10
+	        console.trace();
+	      }
+	    }
+	  }
+
+	  return this;
+	};
+
+	EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+	EventEmitter.prototype.once = function(type, listener) {
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+
+	  var fired = false;
+
+	  function g() {
+	    this.removeListener(type, g);
+
+	    if (!fired) {
+	      fired = true;
+	      listener.apply(this, arguments);
+	    }
+	  }
+
+	  g.listener = listener;
+	  this.on(type, g);
+
+	  return this;
+	};
+
+	// emits a 'removeListener' event iff the listener was removed
+	EventEmitter.prototype.removeListener = function(type, listener) {
+	  var list, position, length, i;
+
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+
+	  if (!this._events || !this._events[type])
+	    return this;
+
+	  list = this._events[type];
+	  length = list.length;
+	  position = -1;
+
+	  if (list === listener ||
+	      (isFunction(list.listener) && list.listener === listener)) {
+	    delete this._events[type];
+	    if (this._events.removeListener)
+	      this.emit('removeListener', type, listener);
+
+	  } else if (isObject(list)) {
+	    for (i = length; i-- > 0;) {
+	      if (list[i] === listener ||
+	          (list[i].listener && list[i].listener === listener)) {
+	        position = i;
+	        break;
+	      }
+	    }
+
+	    if (position < 0)
+	      return this;
+
+	    if (list.length === 1) {
+	      list.length = 0;
+	      delete this._events[type];
+	    } else {
+	      list.splice(position, 1);
+	    }
+
+	    if (this._events.removeListener)
+	      this.emit('removeListener', type, listener);
+	  }
+
+	  return this;
+	};
+
+	EventEmitter.prototype.removeAllListeners = function(type) {
+	  var key, listeners;
+
+	  if (!this._events)
+	    return this;
+
+	  // not listening for removeListener, no need to emit
+	  if (!this._events.removeListener) {
+	    if (arguments.length === 0)
+	      this._events = {};
+	    else if (this._events[type])
+	      delete this._events[type];
+	    return this;
+	  }
+
+	  // emit removeListener for all listeners on all events
+	  if (arguments.length === 0) {
+	    for (key in this._events) {
+	      if (key === 'removeListener') continue;
+	      this.removeAllListeners(key);
+	    }
+	    this.removeAllListeners('removeListener');
+	    this._events = {};
+	    return this;
+	  }
+
+	  listeners = this._events[type];
+
+	  if (isFunction(listeners)) {
+	    this.removeListener(type, listeners);
+	  } else {
+	    // LIFO order
+	    while (listeners.length)
+	      this.removeListener(type, listeners[listeners.length - 1]);
+	  }
+	  delete this._events[type];
+
+	  return this;
+	};
+
+	EventEmitter.prototype.listeners = function(type) {
+	  var ret;
+	  if (!this._events || !this._events[type])
+	    ret = [];
+	  else if (isFunction(this._events[type]))
+	    ret = [this._events[type]];
+	  else
+	    ret = this._events[type].slice();
+	  return ret;
+	};
+
+	EventEmitter.listenerCount = function(emitter, type) {
+	  var ret;
+	  if (!emitter._events || !emitter._events[type])
+	    ret = 0;
+	  else if (isFunction(emitter._events[type]))
+	    ret = 1;
+	  else
+	    ret = emitter._events[type].length;
+	  return ret;
+	};
+
+	function isFunction(arg) {
+	  return typeof arg === 'function';
+	}
+
+	function isNumber(arg) {
+	  return typeof arg === 'number';
+	}
+
+	function isObject(arg) {
+	  return typeof arg === 'object' && arg !== null;
+	}
+
+	function isUndefined(arg) {
+	  return arg === void 0;
+	}
 
 
 /***/ }
