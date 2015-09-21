@@ -1,5 +1,3 @@
-const path = require("path");
-
 module.exports = {
   entry: "./src/main.js",
   output: {
@@ -9,8 +7,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: path.join(__dirname, "es6"),
-        loader: "babel-loader"
+        test: /\.js$/, loader: "babel-loader", exclude: /node_modules/
       }
     ]
   }
